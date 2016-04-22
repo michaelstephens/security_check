@@ -71,7 +71,7 @@ then
     echo " Password is too short (8 or more is recommended)"
   else
     sof true
-    echo " Password length is good"
+    echo " Password length is good (at least 8)"
     ((passwd_check += 1))
   fi
   ((passwd_count += 1))
