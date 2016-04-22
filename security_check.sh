@@ -160,7 +160,7 @@ if command_exists sw_vers; then
   if [[ $response =~ "FileVault 2 Encryption Not Enabled" ]]; then
     sof false
     echo " FileVault 2 Encryption Not Enabled"
-  elif [[ $response =~ "Unknown Version Of Mac OS X"]]
+  elif [[ $response =~ "Unknown Version Of Mac OS X" ]]; then
     sof false
     echo " Unknown Version Of Mac OS X"
   else
