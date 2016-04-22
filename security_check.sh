@@ -37,6 +37,10 @@ command_exists() {
   command -v "$1" >/dev/null 2>&1
 }
 
+round() {
+  echo $(printf %.$2f $(echo "scale=$2;(((10^$2)*$1)+0.5)/(10^$2)" | bc))
+}
+
 # Begin user input
 echo -n "Enter the password for your account (Note: this script does not save the password): "
 IFS= read -rs PASSWD
@@ -115,9 +119,10 @@ else
   ((passwd_count += 1))
 fi
 
+passwd_total_percentage=$(echo "$passwd_check/$passwd_count*100" | bc -l)
 echo
-cecho b "Score: "
-echo "[$passwd_check/$passwd_count]"
+cecho c "Score: "
+echo "$(printf %.2f $passwd_total_percentage)% [$passwd_check/$passwd_count]"
 echo
 
 cecho y "SSH Checks:"
@@ -142,11 +147,11 @@ for file in $ssh_location/*; do
   fi
 done
 
+ssh_total_percentage=$(echo "$ssh_check/$ssh_count*100" | bc -l)
 echo
-cecho b "Score: "
-echo "[$ssh_check/$ssh_count]"
+cecho c "Score: "
+echo "$(printf %.2f $ssh_total_percentage)% [$ssh_check/$ssh_count]"
 echo
-
 
 cecho y "Encryption Checks:"
 echo
@@ -180,7 +185,16 @@ else
   fi
 fi
 
+encrypt_total_percentage=$(echo "$encrypt_check/$encrypt_count*100" | bc -l)
 echo
-cecho b "Score: "
-echo "[$encrypt_check/$encrypt_count]"
+cecho c "Score: "
+echo "$(printf %.2f $ssh_total_percentage)% [$encrypt_check/$encrypt_count]"
+echo
+
+total_check=$((passwd_check+ssh_check+encrypt_check))
+total_count=$((passwd_count+ssh_count+encrypt_count))
+total_percentage=$(echo "$total_check/$total_count*100" | bc -l)
+
+cecho g "Total Score: "
+echo "$(printf %.2f $total_percentage)% [$total_check/$total_count]"
 echo
