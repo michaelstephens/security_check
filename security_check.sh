@@ -20,7 +20,8 @@ cecho() {
   printf "$text"
 }
 
-sof(){
+# Success or Fail
+sof() {
   if $1; then
     echo -n "["
     cecho g "✓"
@@ -30,6 +31,10 @@ sof(){
     cecho r "✗"
     echo -n "]"
   fi
+}
+
+command_exists() {
+  command -v "$1" >/dev/null 2>&1
 }
 
 # Begin user input
@@ -127,11 +132,11 @@ for file in $ssh_location/*; do
       ((ssh_count += 1))
       if [[ $(grep ENCRYPTED $file) ]]; then
         sof true
-        echo " ${file#${ssh_location}} is encrypted"
+        echo " ${file#${ssh_location}} Encrypted"
         ((ssh_check += 1))
       else
         sof false
-        echo " ${file#${ssh_location}} is not encrypted"
+        echo " ${file#${ssh_location}} Not Encrypted"
       fi
     fi
   fi
@@ -140,4 +145,40 @@ done
 echo
 cecho b "Score: "
 echo "[$ssh_check/$ssh_count]"
+echo
+
+
+cecho y "Encryption Checks:"
+echo
+encrypt_check=0
+encrypt_count=0
+
+if command_exists sw_vers; then
+  CORESTORAGESTATUS="/private/tmp/corestorage.txt"
+  ((encrypt_count+=1))
+  response=source filevault_2_encryption_check.sh
+  echo response
+  if [[ response -eq "FileVault 2 Encryption Not Enabled" ]]; then
+    sof false
+    echo " FileVault 2 Encryption Not Enabled"
+  else
+    sof true
+    echo " FileVault 2 Encryption Enabled"
+    ((encrypt_check+=1))
+  fi
+else
+  ((encrypt_count+=1))
+  if [ -d $HOME/.ecryptfs ]; then
+    sof true
+    echo " Home Encryption Enabled"
+    ((encrypt_check+=1))
+  else
+    sof false
+    echo " Home Encryption Disabled"
+  fi
+fi
+
+echo
+cecho b "Score: "
+echo "[$encrypt_check/$encrypt_count]"
 echo

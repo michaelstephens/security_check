@@ -16,3 +16,7 @@ The script searches a directory for all SSH keys and greps for the term `ENCRYPT
 Features:
 - Verifies multiple ssh keys
 - Verifies if the key is encrypted with a password
+
+## Volume Encryption checklist
+- [filevault_2_encryption_check](https://github.com/rtrouton/rtrouton_scripts/tree/master/rtrouton_scripts/filevault_2_encryption_check) to check OS X FileVault encryption
+- Checks for `.ecryptfs` folder in Ubuntu to check if the home dir is encrypted
