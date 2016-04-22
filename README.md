@@ -23,3 +23,6 @@ Features:
 ## Volume Encryption checklist
 - [filevault_2_encryption_check](https://github.com/rtrouton/rtrouton_scripts/tree/master/rtrouton_scripts/filevault_2_encryption_check) to check OS X FileVault encryption
 - Checks for `.ecryptfs` folder in Ubuntu to check if the home dir is encrypted
+
+## Example
+![Security Check Example](http://i.imgur.com/Gi61b2R.png)
