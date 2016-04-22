@@ -2,6 +2,9 @@
 This is a free bash script that helps rate your security for developers.
 If you run a vagrant box this should be run in both the vagrant box and on the host computer to verify password strength of the host computer.
 
+## Running
+`bash security_check.sh` to run.
+
 
 ## Password checklist
 This script checks against the sudoers file for verification of the inputted password.
