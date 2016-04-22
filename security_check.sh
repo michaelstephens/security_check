@@ -156,7 +156,7 @@ encrypt_count=0
 if command_exists sw_vers; then
   CORESTORAGESTATUS="/private/tmp/corestorage.txt"
   ((encrypt_count+=1))
-  response=`source ./filevault_2_encryption_check.sh`
+  response=`source ./external/filevault_2_encryption_check.sh`
   if [[ $response =~ "FileVault 2 Encryption Not Enabled" ]]; then
     sof false
     echo " FileVault 2 Encryption Not Enabled"
